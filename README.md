@@ -1,3 +1,7 @@
+<!-- badges: start -->
+[![CI-CD](https://github.com/datallurgy/soccer-shiny-io_deploy/workflows/CI-CD/badge.svg)](https://github.com/datallurgy/soccer-shiny-io_deploy/actions)
+<!-- badges: end -->
+
 # The ten most similar players Pro Evolution Soccer 2019
 
 We used a data set consisting of 39 attributes from 11,158 players registered in Pro Evolution Soccer 2019 (PES 2019),
