@@ -16,4 +16,11 @@ RoxygenNote: 7.1.1
 Imports:
   rsconnect,
   shinymanager,
-  dotenv
+  dotenv,
+  shinydashboard,
+  plotly,
+  shinycssloaders,
+  knitr,
+  kableExtra,
+  ggfortify,
+  FNN
