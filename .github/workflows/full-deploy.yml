@@ -1,0 +1,91 @@
+# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
+# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+
+# Triggered on push and pull request events
+on: [push, pull_request, workflow_dispatch]
+
+# Name of the workflow => usethis::use_github_actions_badge("CI-CD")
+name: full-deploy
+
+jobs:
+  CI-CD:
+    runs-on: ${{ matrix.config.os }}
+
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+
+    strategy:
+      # We keep a matrix for convenience, but we would typically just run on one
+      # single OS and R version, aligned with the target deployment environment
+      matrix:
+        config:
+          - {os: ubuntu-latest, r: 'release'}
+
+    env:
+      # Access token for GitHub
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      # Preserve package sources for informative references in case of errors
+      R_KEEP_PKG_SOURCE: yes
+      PASSPHRASE: ${{secrets.SHINYMANAGER_PASSPHRASE}}
+      ADMIN_PW: ${{secrets.SHINYMANAGER_ADMIN}}
+      USER_PW: ${{secrets.SHINYMANAGER_USER}}
+
+    steps:
+
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.config.r }}
+          # Enable RStudio Package Manager to speed up package installation
+          use-public-rspm: true
+
+      - name: Install and cache dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            any::rcmdcheck,
+            any::shinymanager,
+            any::dotenv
+
+#      - name: Check package
+#        uses: r-lib/actions/check-r-package@v2
+
+      - name: create env file
+        run: |
+          touch src/.env
+          echo PASSPHRASE=${{secrets.SHINYMANAGER_PASSPHRASE}} > src/.env
+          echo ADMIN_PW=${{secrets.SHINYMANAGER_ADMIN}} >> src/.env
+          echo USER_PW=${{secrets.SHINYMANAGER_USER}} >> src/.env
+          cat src/.env
+        
+      - name: create password database
+        run: Rscript src/create_credentials.R
+
+      - name: modify env file
+        run: |
+          touch src/.env
+          echo PASSPHRASE=${{secrets.SHINYMANAGER_PASSPHRASE}} > src/.env
+          cat src/.env
+       
+      - name: commit files
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -m "update password database and .env passphrase" -a
+        
+      - name: push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+
+      - name: Deploy to shinyapps.io
+        # Continuous deployment only for pushes to the main / master branch
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        env:
+          SHINYAPPS_ACCOUNT: ${{ secrets.SHINYAPPS_ACCOUNT }}
+          SHINYAPPS_TOKEN: ${{ secrets.SHINYAPPS_TOKEN }}
+          SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET }}
+        run: Rscript deploy/deploy-shinyapps.R
