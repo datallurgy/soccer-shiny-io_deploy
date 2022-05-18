@@ -1,3 +1,4 @@
+dotenv::load_dot_env(file = 'src/.env')
 passphrase <- Sys.getenv("PASSPHRASE")
 
 function(input, output, session) {
