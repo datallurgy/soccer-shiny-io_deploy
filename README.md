@@ -1,5 +1,5 @@
 <!-- badges: start -->
-[![CI-CD](https://github.com/datallurgy/soccer-shiny-io_deploy/workflows/CI-CD/badge.svg)](https://github.com/datallurgy/soccer-shiny-io_deploy/actions)
+[![full-deploy](https://github.com/datallurgy/soccer-shiny-io_deploy/actions/workflows/full-deploy.yml/badge.svg)](https://github.com/datallurgy/soccer-shiny-io_deploy/actions/workflows/full-deploy.yml)
 <!-- badges: end -->
 
 # The ten most similar players Pro Evolution Soccer 2019
