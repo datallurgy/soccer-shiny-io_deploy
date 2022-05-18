@@ -18,6 +18,7 @@ Imports:
   shinymanager,
   dotenv,
   shinydashboard,
+  shinythemes,
   plotly,
   shinycssloaders,
   knitr,
