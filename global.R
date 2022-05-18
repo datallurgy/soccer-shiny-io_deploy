@@ -1,6 +1,6 @@
 # Used packages
 pacotes = c("shiny", "shinydashboard", "shinythemes", "plotly", "shinycssloaders","tidyverse",
-            "scales", "knitr", "kableExtra", "ggfortify","dplyr","FNN", 'shinymanager')
+            "scales", "knitr", "kableExtra", "ggfortify","dplyr", "FNN", 'shinymanager')
 
 # Run the following command to verify that the required packages are installed. If some package
 # is missing, it will be installed automatically
