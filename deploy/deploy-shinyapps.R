@@ -6,7 +6,7 @@ rsconnect::setAccountInfo(
   Sys.getenv("SHINYAPPS_SECRET")
 )
 rsconnect::deployApp(
-  appName = "ShinyCICD",
+  appName = "soccer-shiny-io_deploy",
   # exclude hidden files and renv directory (if present)
-  appFiles = setdiff(list.files(), "renv")
+  appFiles = setdiff(list.files(all.files = TRUE), "renv")
 )
