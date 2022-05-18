@@ -1,4 +1,5 @@
 library(shiny)
+library(shinymanager)
 library(shinydashboard)
 library(shinythemes)
 library(plotly)

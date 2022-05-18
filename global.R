@@ -11,6 +11,6 @@ package.check <- lapply(pacotes, FUN = function(x) {
 })
 
 # Define working directory
-data <- read.table("PES2019.txt",header=TRUE,sep="\t")
-names(data)[1] <- "player"  #rename from "ï..player" to "player"
+data <- read.table("data/PES2019.txt",header=TRUE,sep="\t")
+names(data)[1] <- "player"  #rename from "?..player" to "player"
 

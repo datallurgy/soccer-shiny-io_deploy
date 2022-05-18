@@ -1,4 +1,5 @@
-navbarPage("The ten most similar players - Pro Evolution Soccer 2019",
+ui <- fluidPage(
+  navbarPage("The ten most similar players - Pro Evolution Soccer 2019",
            tabPanel("Graphic",fluidPage(theme = shinytheme("flatly")),
 tags$head(
   tags$style(HTML(".shiny-output-error-validation{color: red;}"))),
@@ -94,7 +95,9 @@ tabPanel("Developers",
              p(a("Francisco Caninde Assis de Oliveira", href="http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K8219531A6", target="_blank"),style = "font-size:25px"),
                p("e-mail: frecs123@gmail.com",style = "font-size:20px"))
 
-)
+))
+
+ui <- secure_app(ui, enable_admin = TRUE)
 
 
 

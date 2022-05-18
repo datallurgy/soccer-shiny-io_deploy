@@ -1,4 +1,18 @@
+passphrase <- Sys.getenv("PASSPHRASE")
+
 function(input, output, session) {
+  
+  # check_credentials directly on sqlite db
+  res_auth <- secure_server(
+    check_credentials = check_credentials(
+      "data/database.sqlite",
+      passphrase = passphrase
+    )
+  )
+  
+  output$auth_output <- renderPrint({
+    reactiveValuesToList(res_auth)
+  })
   
     selectedData1 <- reactive({
       data %>%
